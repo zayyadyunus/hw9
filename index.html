@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Red Pill Blues</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale-1.0">
+        <style>
+            html, body {
+                font-size: 20px; 
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                background: #00b2b2;
+            }
+            h1 {
+                background: #020129;
+                color: #ffffff;
+            }
+        </style>
+        <script lang="javascript">
+            /* 1. Create a JSON */
+            var songs = [
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Best 4 U",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5",
+                        "SZA"
+                    ],
+                    "title": "What Lovers Do",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Wait",
+                    "genres": [
+                        "R&B"
+                    ],
+                    "year": 2018
+                },
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Lips On You",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Bet My Heart",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5",
+                        "Julia Michaels"
+                    ],
+                    "title": "Help Me Out",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5",
+                        "LunchMoney Lewis"
+                    ],
+                    "title": "Who I Am",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5",
+                        "A$AP Rocky"
+                    ],
+                    "title": "Whiskey",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Girls Like You",
+                    "genres": [
+                        "Pop",
+                        "Pop rock"
+                    ],
+                    "year": 2017
+                },
+                {
+                    "artists": [
+                        "Maroon 5"
+                    ],
+                    "title": "Closure",
+                    "genres": [
+                        "Pop"
+                    ],
+                    "year": 2017
+                }
+            ];
+        </script>
+    </head>
+    <body>
+        <h1>The "Best" of Maroon 5</h1>
+        <p id="serial">
+            <!-- Part 2. Serialize and display -->
+        </p>
+        <p id="display">
+            <!-- Part 3. User friendly display -->
+        </p>
+        <form>
+            <label><b>Filter by genre: </b></label>
+            <select id="filter">
+                <option>-- Select Genre --</option>
+            </select>
+            <button type = "button" onclick = "filter_genre()"> Filter </button>
+        </form>
+        <p id="filtered">
+            <!-- Part 4. Filter the data -->
+        </p>
+
+        <script lang="javascript">
+            /* 2. Serialize and display */
+            str = "";
+            for (i = 0; i < songs.length; i++) {
+                str += JSON.stringify(songs[i]) + "<br/>";
+            }
+            document.getElementById("serial").innerHTML = str;
+
+            /* 3. User friendly display */
+            str = "";
+            for (i = 0; i < songs.length; i++) {
+                var obj = songs[i];
+                str += "<b>" + obj.title + "</b> <br/>";
+                str += "Artist: ";
+                for (j = 0; j < obj.artists.length; j++) {
+                    if (j == 0) {
+                        str += obj.artists[j];
+                    }
+                    else {
+                        str += ", " + obj.artists[j];
+                    }
+                }
+                str+= "<br/>";
+                str+= "Genre: ";
+                for (j = 0; j < obj.genres.length; j++) {
+                    if (j == 0){
+                        str+= obj.genres[j];
+                    }
+                    else {
+                        str+= ", " + obj.genres[j];
+                    }
+                }
+                str+= "<br/>";
+                str+= "Released " + obj.year + "<br/>";
+            }
+            document.getElementById("display").innerHTML = str;
+
+            /* 4. Filter the data */
+            function filter_genre() {
+                str = "";
+                var x = document.getElementById("filter");
+                var index = x.selectedIndex;
+                var cur = x.options[index].text;
+                var match = false;
+                for (i = 0; i < songs.length; i++) {
+                    var obj = songs[i];
+                    for (j = 0; j < obj.genres.length; j++) {
+                        if (obj.genres[j] == cur) {
+                            match = true;
+                            break;
+                        }
+                    }
+                    if (match) {
+                        str += "<b>" + obj.title + "</b> <br/>";
+                        str += "Artist: ";
+                        for (j = 0; j < obj.artists.length; j++) {
+                            if (j == 0) {
+                                str += obj.artists[j];
+                            }
+                            else {
+                                str += ", " + obj.artists[j];
+                            }
+                        }
+                        str+= "<br/>";
+                        str+= "Genre: ";
+                        for (j = 0; j < obj.genres.length; j++) {
+                            if (j == 0){
+                                str+= obj.genres[j];
+                            }
+                            else {
+                                str+= ", " + obj.genres[j];
+                            }
+                        }
+                        str+= "<br/>";
+                        str+= "Released " + obj.year + "<br/>";
+                    }
+                    match = false;
+                }
+                document.getElementById("filtered").innerHTML = str;
+
+                /* Automatically scroll to bottom of page */
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+
+            var all = new Set();
+            var opt = "";
+            for (i = 0; i < songs.length; i++) {
+                var obj = songs[i];
+                for (j = 0; j < obj.genres.length; j++) {
+                    var cur = obj.genres[j];
+                    if (! all.has(cur)) {
+                        all.add(cur);
+                        opt += '<option>' + cur + '</option>';
+                    }
+                }
+            }
+            document.getElementById("filter").innerHTML += opt;
+        </script>
+    </body>
+</html>
